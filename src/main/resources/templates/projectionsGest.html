@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template.html">
+<head>
+<meta charset="windows-1256">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+	<div layout:fragment="pageContent">
+		<div class="container mt-5">
+		<div class="card">
+			<div class="card-header">Projections List</div>
+			<div class="card-body">
+			<table class="table">
+			<tr>
+			<th>ID</th><th>Movie</th><th>Projection Date</th><th>Price</th><th>Session</th><th>City</th><th>Cinema</th><th>Room</th>
+		</tr>
+		<tr th:each="pr:${projections}">
+			<td th:text="${pr.id}"></td>
+			<td th:text="${pr.film.titre}"></td>
+			<td th:text="${#dates.format(pr.dateProjection, 'dd-MM-yyyy')}"></td>
+			<td th:text="${pr.prix}"></td>
+			<td th:text="${pr.seance.heureDebut}"></td>
+			<td th:text="${pr.salle.cinema.ville.name}"></td>
+			<td th:text="${pr.salle.cinema.name}"></td>
+			<td th:text="${pr.salle.name}"></td>
+			<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-warning"
+								th:href="@{editprojection(projection=${pr.id}, film=${film})}">Edit</a></td>
+							<td sec:authorize="hasRole('ADMIN')"><a
+								onclick="return confirm('etes vous sur de vouloir supprimer?')"
+								class="btn btn-danger" th:href="@{deleteprojection(id=${pr.id}, film=${film})}">Delete</a></td>
+		</tr>
+					
+				</table>
+				
+				<ul class="nav nav-pills">
+					<li th:each="page, status:${pages}"><a
+						th:class="${currentPage==status.index ? 'btn btn-primary' : 'btn'}"
+						th:href="@{projectionsgest(page=${status.index}, film=${film} )}"
+						th:text="${status.index}"></a></li>
+				</ul>
+				</div>
+		</div>
+		<div sec:authorize="hasRole('ADMIN')" class="text-center">
+			<a
+							class="btn btn-primary col-md-6"
+							th:href="@{formprojection(film=${film})}">Add</a>
+		</div>
+		
+	</div>
+	</div>
+</body>
+</html>

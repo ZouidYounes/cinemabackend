@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="windows-1256">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header">Sessions List</div>
+			<div class="card-body">
+				<table class="table">
+					<tr>
+						<th>ID</th>
+						<th>Starting hour</th>
+					</tr>
+					<tr th:each="s:${seances}">
+						<td th:text="${s.id}"></td>
+						<td th:text="${s.heureDebut}"></td>
+						<td><a class="btn btn-danger" th:href="@{deleteseance(id=${s.id})}">Display</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

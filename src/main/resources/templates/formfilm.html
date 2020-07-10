@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template.html">
+<head>
+<meta charset="windows-1256">
+
+<title>Movie Form</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+	<div layout:fragment="pageContent">
+		<div class="container col-md-6 mt-4">
+			<div class="card">
+				<div class="card-header">Film Form</div>
+				<div class="card-body">
+					<form th:action="@{savefilm}" method="post" th:object="${film}" enctype="multipart/form-data">
+						<div class="form-group">
+							<input type="hidden" name="id" class="form-control"
+								th:value="${film.id}">
+						</div>
+						<div class="form-group">
+							<label class="control-label">Title</label> <input type="text"
+								name="titre" class="form-control" th:value="${film.titre}">
+							<span th:errors=${film.titre}></span>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label">Description</label>
+							<textarea name="description" class="form-control" rows="5"
+								th:value="${film.description}"></textarea>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Director</label> <input
+								type="text" name="realisateur" class="form-control"
+								th:value="${film.realisateur}"> <span></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Release Date</label> <input
+								name="dateSortie" class="form-control" type="date"
+								th:value="${film.dateSortie}">
+						</div>
+						<div class="form-group">
+							<label class="control-label">Duration(min)</label> <input
+								name="duree" class="form-control" type="number"
+								th:value="${film.duree}">
+						</div>
+						<div class="form-group">
+							<label class="control-label">Category</label> 
+							<select th:field="*{categorie.id}" class="form-control">
+								<option th:each="c: ${categories}" th:text="${c.name}"
+									th:value="${c.id}">
+							</select>
+						</div>
+						<div class="form-group">
+						<label class="control-label">Photo</label><br>
+							<input type="file" th:object="${myUploadForm}"
+									th:field="*{fileDatas}" >
+						</div>
+
+						<button class="btn btn-success" type="submit">Save</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+</html>

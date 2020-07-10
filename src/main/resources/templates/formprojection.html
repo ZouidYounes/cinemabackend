@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template.html">
+<head>
+<meta charset="windows-1256">
+
+<title>Projection form</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+	<div layout:fragment="pageContent">
+		<div class="container col-md-6 mt-4">
+			<div class="card">
+				<div class="card-header">Projection Form</div>
+				<div class="card-body">
+					<form th:action="@{saveprojection}" method="post" th:object="${projection}">
+					<div class="form-group">
+							<input type="hidden" name="id" class="form-control"
+								th:value="${projection.id}">
+						</div>
+					<input type="hidden" name="film.id" class="form-control" th:value="${film}">
+					<input type="hidden" name="film" th:value="${film}">
+						<div class="form-group">
+							<input type="hidden" name="id" class="form-control"
+								th:value="${projection.id}">
+						</div>
+						<div class="form-group">
+							<label class="control-label">Projection date</label> <input type="date"
+								name="dateProjection" class="form-control" th:value="${projection.dateProjection}">
+							<span></span>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label">Price</label>
+							<input type="number" name="prix" class="form-control"
+								th:value="${projection.prix}">
+						</div>
+						
+						<!--<div class="form-group">
+							<label class="control-label">Ville</label>  <select
+								name="salle.cinema.ville.id" class="form-control">
+								<option value="default">Choose</option>
+								<option th:each="v: ${villes}" th:text="${v.name}"
+									th:value="${v.id}">
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label">Cinema</label> <select th:if="v!=null"
+								name="salle.cinema.id" class="form-control">
+								<option value="default">Choose</option>
+								<option th:each="c: ${v.cinemas}" th:text="${c.name}"
+									th:value="${c.id}">
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label">Salle</label> <select th:if="c!=null"
+								name="salle.id" class="form-control">
+								<option value="default">Choose</option>
+								<option th:each="s: ${c.salles}" th:text="${s.name}"
+									th:value="${s.id}">
+							</select>
+						</div> -->
+						<div class="form-group">
+							<label class="control-label">Room</label> <select
+								name="salle.id" class="form-control">
+								<option value="default">Choose</option>
+								<option th:each="s: ${salles}" th:text="${s.cinema.ville.name} + ', ' +${s.cinema.name} + ', ' + ${s.name}"
+									th:value="${s.id}">
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label">Session</label>  <select
+								name="seance.id" class="form-control">
+								<option value="default">Choose</option>
+								<option th:each="sc: ${seances}" th:text="${sc.heureDebut}"
+									th:value="${sc.id}">
+							</select>
+						</div>
+						
+						<button class="btn btn-success" type="submit">Save</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+</html>
